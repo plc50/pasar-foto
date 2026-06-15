@@ -111,9 +111,38 @@ Estas medidas reducen riesgos; no constituyen una auditoría formal. El
 [documento técnico](docs/SECURE_WIFI.md) explica también los metadatos visibles,
 la gestión de claves y los límites del diseño.
 
+## 📥 Descargar y verificar
+
+Descarga la APK desde
+**[GitHub Releases](https://github.com/plc50/pasar-foto/releases/tag/v2.0.0)**:
+
+- Archivo: `PasarFoto-v2.0.0.apk`
+- SHA-256:
+  `077108e5e47f8961ede3aa9121642eefe61dc097a86504650483c6d45f2d7af5`
+- Análisis público:
+  **[VirusTotal](https://www.virustotal.com/gui/file/077108e5e47f8961ede3aa9121642eefe61dc097a86504650483c6d45f2d7af5/detection)**
+
+Comprueba el archivo descargado en Linux:
+
+```bash
+sha256sum PasarFoto-v2.0.0.apk
+```
+
+El resultado debe coincidir exactamente con el SHA-256 publicado arriba.
+VirusTotal es una comprobación adicional, no sustituye la revisión del código
+fuente ni garantiza por sí solo que una aplicación sea segura.
+
 ## 🚀 Uso rápido
 
-### 1. Compila e instala la app
+### 1. Instala la app
+
+Instala la APK descargada desde GitHub Releases:
+
+```bash
+adb install PasarFoto-v2.0.0.apk
+```
+
+También puedes compilarla directamente desde el código fuente:
 
 Con el Android SDK, JDK y ADB instalados, conecta el móvil por USB y ejecuta:
 
