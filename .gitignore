@@ -1,0 +1,34 @@
+# Build output
+/build/
+/dist/
+
+# Local signing material
+/signing/
+*.keystore
+*.jks
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+local.properties
+*.log
+
+# Python
+/.venv/
+__pycache__/
+*.py[cod]
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+
+# Recorded source videos. Keep only the optimized GIF.
+/docs/assets/*.mp4
+/docs/assets/*.webm
+/docs/assets/*.mkv

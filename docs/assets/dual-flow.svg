@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="430" viewBox="0 0 1200 430" role="img" aria-labelledby="title desc">
+  <title id="title">Flujo USB y Wi-Fi seguro de Pasar Foto</title>
+  <desc id="desc">La aplicación Android puede enviar la foto por ADB USB o mediante emparejamiento Wi-Fi cifrado al receptor Linux y al portapapeles.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#071c24"/>
+      <stop offset="1" stop-color="#12333c"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000" flood-opacity=".28"/>
+    </filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#79e2d0"/>
+    </marker>
+    <style>
+      .box{fill:#102c35;stroke:#2d6670;stroke-width:2;rx:18;filter:url(#shadow)}
+      .title{font:700 23px system-ui,sans-serif;fill:#f6fbfa}
+      .body{font:400 17px system-ui,sans-serif;fill:#bcd3d2}
+      .tag{font:700 15px system-ui,sans-serif;fill:#071c24}
+      .line{stroke:#79e2d0;stroke-width:4;fill:none;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="1200" height="430" rx="28" fill="url(#bg)"/>
+  <rect class="box" x="45" y="145" width="220" height="140"/>
+  <text class="title" x="155" y="195" text-anchor="middle">Android</text>
+  <text class="body" x="155" y="230" text-anchor="middle">Cámara o galería</text>
+  <text class="body" x="155" y="258" text-anchor="middle">Pasar Foto</text>
+
+  <path class="line" d="M265 185 C330 185 330 100 395 100"/>
+  <path class="line" d="M265 245 C330 245 330 330 395 330"/>
+
+  <rect class="box" x="400" y="40" width="300" height="130"/>
+  <rect x="425" y="60" width="54" height="25" rx="13" fill="#f1cb63"/>
+  <text class="tag" x="452" y="78" text-anchor="middle">USB</text>
+  <text class="title" x="550" y="108" text-anchor="middle">ADB reverse</text>
+  <text class="body" x="550" y="140" text-anchor="middle">Solo localhost · sin red</text>
+
+  <rect class="box" x="400" y="260" width="300" height="130"/>
+  <rect x="425" y="280" width="64" height="25" rx="13" fill="#79e2d0"/>
+  <text class="tag" x="457" y="298" text-anchor="middle">WI-FI</text>
+  <text class="title" x="550" y="328" text-anchor="middle">QR + código</text>
+  <text class="body" x="550" y="360" text-anchor="middle">ECDH · AES-256-GCM · HMAC</text>
+
+  <path class="line" d="M700 105 C755 105 755 185 810 185"/>
+  <path class="line" d="M700 325 C755 325 755 245 810 245"/>
+
+  <rect class="box" x="815" y="145" width="180" height="140"/>
+  <text class="title" x="905" y="198" text-anchor="middle">Receptor</text>
+  <text class="body" x="905" y="232" text-anchor="middle">Python</text>
+  <text class="body" x="905" y="260" text-anchor="middle">Valida y descifra</text>
+
+  <path class="line" d="M995 215 H1060"/>
+  <rect class="box" x="1065" y="155" width="105" height="120"/>
+  <text class="title" x="1117" y="205" text-anchor="middle">Linux</text>
+  <text class="body" x="1117" y="238" text-anchor="middle">Ctrl+V</text>
+</svg>
