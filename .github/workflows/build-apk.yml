@@ -35,7 +35,7 @@ jobs:
         run: python -m unittest discover -s tests -v
       - name: Verify Java/Python crypto compatibility
         run: ./scripts/test-java-crypto.sh
-      - uses: android-actions/setup-android@v3
+      - uses: android-actions/setup-android@v4
       - name: Install Android SDK packages
         run: sdkmanager "platforms;android-36" "build-tools;36.0.0"
       - name: Build APK
