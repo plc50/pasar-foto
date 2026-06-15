@@ -1,9 +1,8 @@
-name: CI / APK
+name: CI
 
 on:
   push:
     branches: [main]
-    tags: ["v*"]
   pull_request:
 
 permissions:
@@ -15,77 +14,32 @@ concurrency:
 
 jobs:
   verify:
-    name: Tests and APK
+    name: Tests and APK build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: "17"
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
-          cache: pip
-      - name: Install secure Wi-Fi dependencies
+      - name: Install dependencies
         run: pip install -r requirements-wifi.txt
-      - name: Validate shell and Python sources
+      - name: Validate sources
         run: |
           bash -n run.sh scripts/*.sh
           python -m py_compile scripts/*.py
-      - name: Run secure protocol tests
+      - name: Run protocol tests
         run: python -m unittest discover -s tests -v
       - name: Verify Java/Python crypto compatibility
         run: ./scripts/test-java-crypto.sh
       - uses: android-actions/setup-android@v3
       - name: Install Android SDK packages
         run: sdkmanager "platforms;android-36" "build-tools;36.0.0"
-      - name: Build and verify APK
+      - name: Build APK
         env:
           ANDROID_PLATFORM: android-36
           ANDROID_BUILD_TOOLS: 36.0.0
         run: ./scripts/build-apk.sh
-      - uses: actions/upload-artifact@v4
-        with:
-          name: PasarFoto-debug
-          path: dist/PasarFoto.apk
-          if-no-files-found: error
-
-  release:
-    name: Publish APK
-    if: startsWith(github.ref, 'refs/tags/v')
-    needs: verify
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: "17"
-      - uses: android-actions/setup-android@v3
-      - name: Install Android SDK packages
-        run: sdkmanager "platforms;android-36" "build-tools;36.0.0"
-      - name: Restore release signing key
-        env:
-          KEYSTORE_B64: ${{ secrets.ANDROID_SIGNING_KEYSTORE_B64 }}
-        run: |
-          test -n "$KEYSTORE_B64"
-          printf '%s' "$KEYSTORE_B64" | base64 --decode \
-            > "$RUNNER_TEMP/pasar-foto-release.keystore"
-          chmod 600 "$RUNNER_TEMP/pasar-foto-release.keystore"
-      - name: Build signed release APK
-        env:
-          ANDROID_PLATFORM: android-36
-          ANDROID_BUILD_TOOLS: 36.0.0
-          ANDROID_KEYSTORE: ${{ runner.temp }}/pasar-foto-release.keystore
-          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_SIGNING_KEY_ALIAS }}
-          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_SIGNING_STORE_PASSWORD }}
-          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_SIGNING_KEY_PASSWORD }}
-        run: ./scripts/build-apk.sh
-      - name: Attach APK to GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          generate_release_notes: true
-          files: dist/PasarFoto.apk

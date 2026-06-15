@@ -4,7 +4,6 @@
 
 <p align="center">
   <a href="https://github.com/plc50/pasar-foto/actions/workflows/build-apk.yml"><img alt="CI" src="https://github.com/plc50/pasar-foto/actions/workflows/build-apk.yml/badge.svg"></a>
-  <a href="https://github.com/plc50/pasar-foto/releases/latest"><img alt="Última versión" src="https://img.shields.io/github/v/release/plc50/pasar-foto?color=19a7a0"></a>
   <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-19a7a0"></a>
   <img alt="Android" src="https://img.shields.io/badge/Android-29%2B-3DDC84?logo=android&logoColor=white">
   <img alt="Linux" src="https://img.shields.io/badge/Linux-Wayland%20%7C%20X11-FCC624?logo=linux&logoColor=111">
@@ -114,17 +113,19 @@ la gestión de claves y los límites del diseño.
 
 ## 🚀 Uso rápido
 
-### 1. Instala la APK
+### 1. Compila e instala la app
 
-Descarga `PasarFoto.apk` desde [GitHub Releases](https://github.com/plc50/pasar-foto/releases/latest) e instálala
-en Android. Las Releases se firman con una clave dedicada y estable; no están
-destinadas a Google Play. También puedes compilar una APK de desarrollo local:
+Con el Android SDK, JDK y ADB instalados, conecta el móvil por USB y ejecuta:
 
 ```bash
 ./scripts/install-and-run.sh
 ```
 
-### Opción A: USB
+El script compila la APK, la instala y abre Pasar Foto.
+
+### 2. Elige el transporte
+
+#### Opción A: USB
 
 En Android, habilita **Opciones de desarrollador → Depuración USB**, conecta el
 cable, acepta la huella del ordenador y ejecuta:
@@ -133,7 +134,7 @@ cable, acepta la huella del ordenador y ejecuta:
 ./run.sh usb
 ```
 
-### Opción B: Wi-Fi seguro
+#### Opción B: Wi-Fi seguro
 
 Instala una vez las dependencias del receptor Wi-Fi:
 
@@ -154,9 +155,7 @@ muestra el PC. El QR por sí solo no autoriza la conexión.
 En ambos modos, cuando la app muestre que el receptor está preparado, haz una
 foto y pégala en Linux con `Ctrl+V`.
 
-## 📦 Requisitos
-
-### Compatibilidad real
+## 📦 Compatibilidad
 
 No depende de Arch Linux. Funciona en distribuciones Linux de escritorio que
 cumplan estos requisitos:
@@ -167,9 +166,9 @@ cumplan estos requisitos:
 - `cryptography`, `qrencode` e `iproute2` para el modo Wi-Fi;
 - `wl-copy` en una sesión Wayland o `xclip` en una sesión X11.
 
-Esto incluye normalmente Arch, Debian, Ubuntu, Fedora, openSUSE y derivadas.
-No significa literalmente cualquier sistema Linux: una instalación mínima,
-un servidor sin escritorio, Mir, macOS o Windows necesitan otro backend.
+Esto incluye normalmente Arch, Debian, Ubuntu, Fedora, openSUSE y sus
+derivadas. Un servidor sin escritorio, macOS o Windows necesitan otro backend
+de portapapeles.
 
 Comprueba el equipo antes de conectar el móvil:
 
@@ -177,16 +176,6 @@ Comprueba el equipo antes de conectar el móvil:
 ./scripts/check-system.sh usb
 ./scripts/check-system.sh wifi
 ```
-
-| Componente | Requisito |
-|---|---|
-| Teléfono | Android 10 o superior |
-| USB | ADB / Android platform-tools, opcional |
-| Wi-Fi | Python `cryptography`, `qrencode`, `iproute2`, opcional |
-| Wayland | `wl-clipboard` |
-| X11 | `xclip` |
-| Receptor | Python 3 |
-| Compilación | Android SDK + JDK |
 
 Ejemplos:
 
@@ -228,38 +217,6 @@ python3 -m unittest discover -s tests -v
 El script detecta automáticamente `ANDROID_HOME`, `ANDROID_SDK_ROOT`, la
 plataforma instalada y la versión más reciente de Android build-tools.
 
-### Publicar una APK
-
-GitHub Actions construye y adjunta la APK automáticamente al crear una etiqueta:
-
-```bash
-git tag v2.0.0
-git push origin v2.0.0
-```
-
-No subas `dist/PasarFoto.apk` ni ningún archivo de `signing/` al repositorio.
-Los binarios deben vivir en **Releases**, las claves en GitHub Secrets y el
-código fuente en Git.
-
-## 🎬 Grabar nuevas demos
-
-La forma más clara es reflejar el móvil con `scrcpy` y grabar el monitor con
-OBS. Para Wi-Fi conviene crear dos GIF cortos: uno del emparejamiento QR +
-código y otro de la foto apareciendo al pulsar `Ctrl+V`.
-
-La guía completa está en
-**[docs/RECORDING_DEMO.md](docs/RECORDING_DEMO.md)**. El resumen es:
-
-```bash
-./run.sh wifi
-scrcpy --window-title "Pasar Foto · Android" --max-size 900 --stay-awake
-# Graba 10-20 segundos con OBS.
-./scripts/video-to-gif.sh \
-  "$HOME/Videos/tu-grabacion.mkv" docs/assets/demo-transfer.gif
-```
-
-Intenta mantener cada GIF por debajo de 8 MB para que GitHub lo cargue rápido.
-
 ## 🔒 Privacidad y límites
 
 - En USB, el servidor escucha únicamente en `127.0.0.1`.
@@ -273,15 +230,6 @@ Intenta mantener cada GIF por debajo de 8 MB para que GitHub lo cargue rápido.
   sido auditado externamente.
 - Está pensado para Linux; macOS y Windows aún no tienen backend de
   portapapeles.
-
-## 🗺️ Roadmap
-
-- [x] Emparejamiento Wi-Fi mediante QR y confirmación humana.
-- [x] Cifrado y autenticación de extremo a extremo en la red local.
-- [ ] Compartir varias imágenes en una sola operación.
-- [ ] Paquetes instalables para distribuciones Linux.
-- [ ] Backend de portapapeles para macOS.
-- [ ] Backend de portapapeles para Windows.
 
 ## 📄 Licencia
 
